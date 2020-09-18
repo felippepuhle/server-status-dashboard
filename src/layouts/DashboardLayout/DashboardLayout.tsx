@@ -17,8 +17,12 @@ import SideBar from "./components/SideBar";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "100%",
+    height: "100%",
   },
   content: {
+    display: "flex",
+    flexDirection: "column",
     flexGrow: 1,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
@@ -37,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   container: {
+    flex: 1,
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
   },
@@ -69,7 +74,7 @@ const DashboardLayout = () => {
       >
         <div className={classes.appBarGap} />
 
-        <Container maxWidth="sm" className={classes.container}>
+        <Container className={classes.container}>
           <Switch>
             <Route path="/apollo">
               <Apollo />
