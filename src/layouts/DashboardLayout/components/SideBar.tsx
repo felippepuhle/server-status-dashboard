@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
@@ -42,6 +42,17 @@ const SideBar: React.FC<Props> = ({ isMobile, isVisible, onClose }) => {
 
   const history = useHistory();
 
+  const goTo = useCallback(
+    (route: string) => {
+      history.push(route);
+
+      if (isMobile) {
+        onClose();
+      }
+    },
+    [isMobile, onClose, history]
+  );
+
   return (
     <Drawer
       variant={isMobile ? "temporary" : "persistent"}
@@ -63,7 +74,7 @@ const SideBar: React.FC<Props> = ({ isMobile, isVisible, onClose }) => {
         <ListItem
           button
           selected={history.location.pathname === "/"}
-          onClick={() => history.push("/")}
+          onClick={() => goTo("/")}
         >
           <ListItemIcon>
             <HomeIcon />
@@ -74,7 +85,7 @@ const SideBar: React.FC<Props> = ({ isMobile, isVisible, onClose }) => {
         <ListItem
           button
           selected={history.location.pathname === "/apollo"}
-          onClick={() => history.push("/apollo")}
+          onClick={() => goTo("/apollo")}
         >
           <ListItemIcon>
             <SentimentVerySatisfiedIcon />
@@ -85,7 +96,7 @@ const SideBar: React.FC<Props> = ({ isMobile, isVisible, onClose }) => {
         <ListItem
           button
           selected={history.location.pathname === "/relay"}
-          onClick={() => history.push("/relay")}
+          onClick={() => goTo("/relay")}
         >
           <ListItemIcon>
             <SentimentVerySatisfiedIcon />

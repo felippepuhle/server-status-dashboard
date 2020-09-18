@@ -9,9 +9,9 @@ import { Loading, Stat } from "src/components";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: "absolute",
-    bottom: theme.spacing(4),
-    right: theme.spacing(4),
+    position: "fixed",
+    bottom: theme.spacing(6),
+    right: theme.spacing(3),
   },
 }));
 
@@ -54,6 +54,18 @@ const ADD_JOB_MUTATION = gql`
   }
 `;
 
+const getColor = (value: number) => {
+  if (value > 70) {
+    return "error";
+  }
+
+  if (value > 40) {
+    return "warning";
+  }
+
+  return undefined;
+};
+
 const Apollo = () => {
   const classes = useStyles();
 
@@ -75,6 +87,7 @@ const Apollo = () => {
   const diskQty = statusChanged?.disk || status?.disk;
   const jobsQty = jobsChanged?.running || jobs?.running;
 
+  const canAddJob = cpuQty < 70 && memoryQty < 70 && diskQty < 70;
   const [addJob] = useMutation(ADD_JOB_MUTATION);
 
   if (loading) {
@@ -85,13 +98,25 @@ const Apollo = () => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={3}>
-          <Stat title="CPU" value={`${Math.round(cpuQty)}%`} />
+          <Stat
+            title="CPU"
+            value={`${Math.round(cpuQty)}%`}
+            valueColor={getColor(cpuQty)}
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <Stat title="Memory" value={`${Math.round(memoryQty)}%`} />
+          <Stat
+            title="Memory"
+            value={`${Math.round(memoryQty)}%`}
+            valueColor={getColor(memoryQty)}
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <Stat title="Disk" value={`${Math.round(diskQty)}%`} />
+          <Stat
+            title="Disk"
+            value={`${Math.round(diskQty)}%`}
+            valueColor={getColor(diskQty)}
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
           <Stat title="Jobs running" value={jobsQty} />
@@ -102,6 +127,7 @@ const Apollo = () => {
         color="primary"
         variant="extended"
         className={classes.fab}
+        disabled={!canAddJob}
         onClick={() => addJob()}
       >
         <AddIcon />
