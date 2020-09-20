@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
   title: string;
-  value: string;
+  value: string | number;
   valueColor?: "error" | "warning";
 };
 
-const Stat: React.FC<Props> = ({ title, value, valueColor }) => {
+const StatCard: React.FC<Props> = ({ title, value, valueColor }) => {
   const classes = useStyles();
 
   return (
@@ -45,4 +45,4 @@ const Stat: React.FC<Props> = ({ title, value, valueColor }) => {
   );
 };
 
-export default Stat;
+export default StatCard;

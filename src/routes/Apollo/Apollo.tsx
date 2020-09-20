@@ -2,10 +2,9 @@ import React from "react";
 import { useQuery, useSubscription, useMutation, gql } from "@apollo/client";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Loading, Stat } from "src/components";
+import { Loading, StatsGrid } from "src/components";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -54,18 +53,6 @@ const ADD_JOB_MUTATION = gql`
   }
 `;
 
-const getColor = (value: number) => {
-  if (value > 70) {
-    return "error";
-  }
-
-  if (value > 40) {
-    return "warning";
-  }
-
-  return undefined;
-};
-
 const Apollo = () => {
   const classes = useStyles();
 
@@ -96,32 +83,12 @@ const Apollo = () => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={3}>
-          <Stat
-            title="CPU"
-            value={`${Math.round(cpuQty)}%`}
-            valueColor={getColor(cpuQty)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <Stat
-            title="Memory"
-            value={`${Math.round(memoryQty)}%`}
-            valueColor={getColor(memoryQty)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <Stat
-            title="Disk"
-            value={`${Math.round(diskQty)}%`}
-            valueColor={getColor(diskQty)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <Stat title="Jobs running" value={jobsQty} />
-        </Grid>
-      </Grid>
+      <StatsGrid
+        cpu={cpuQty}
+        memory={memoryQty}
+        disk={diskQty}
+        jobs={jobsQty}
+      />
 
       <Fab
         color="primary"

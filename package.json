@@ -3,7 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-relay": "^7.0.10",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/relay-runtime": "^10.0.3",
+    "babel-plugin-relay": "^10.0.1",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.1.6",
+    "relay-compiler": "^10.0.1",
+    "relay-compiler-language-typescript": "^13.0.1",
+    "relay-config": "^10.0.1"
   },
   "dependencies": {
     "@apollo/client": "^3.2.0",
@@ -19,18 +27,20 @@
     "@types/react-dom": "^16.9.0",
     "clsx": "^1.1.1",
     "graphql": "^15.3.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^0.0.0-experimental-94c0244ba",
+    "react-dom": "^0.0.0-experimental-94c0244ba",
+    "react-relay": "^0.0.0-experimental-183bdd28",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "subscriptions-transport-ws": "^0.9.18",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "relay": "relay-compiler --language typescript --extensions ts tsx",
+    "relay:update-schema": "get-graphql-schema http://localhost:4000/graphql > ./data/schema.graphql & get-graphql-schema http://localhost:4000/graphql --json > ./data/schema.json"
   },
   "eslintConfig": {
     "extends": "react-app"
